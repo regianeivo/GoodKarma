@@ -124,8 +124,8 @@ export function getCommentController() {
             };
 
             //block is provisional taken from the block bellow for test
-            const karma = await karmaRepository.save(data);
-            res.json(karma);
+            //const karma = await karmaRepository.save(data);
+            //res.json(karma);
             
 
             // block bellow prevent the user to vote the same comment twice
