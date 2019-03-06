@@ -61,7 +61,7 @@ export function getLinkController() {
     router.get("/:id", (req, res) => {
         (async () => {
             const id = req.params.id;
-            const links = await linkRepository.findOne(id,{relations: ['comment']})
+            const links = await linkRepository.findOne(id,{relations: ['reply']})
             if (links === undefined){
                 res.status(404).send('link not found');
             }else{

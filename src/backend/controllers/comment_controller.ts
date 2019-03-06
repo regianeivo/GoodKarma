@@ -51,7 +51,7 @@ export function getCommentController() {
                 const data = {
                     text: req.body.text,
                     user: userId,
-                    link: req.body.link,
+                    reply: req.body.reply,
                     date: Date()
                 };
                 const comments = await commentRepository.save(data);
