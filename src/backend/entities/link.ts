@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn} from "typeorm";
 import { User } from "./user";
-import { Comment } from "./comment";
+import { Reply } from "./reply";
 
 @Entity()
 export class Link {
@@ -17,8 +17,8 @@ export class Link {
     @ManyToOne(type => User, user => user.link)
     @JoinColumn({name: "userId"})
     user: User;
-    @OneToMany(type => Comment, comment => comment.link)
-    comment: Comment[];
+    @OneToMany(type => Reply, reply => reply.link)
+    reply: Reply[];
 }
 // edited tsconfig.json
 //strictPropertyInitialization": false

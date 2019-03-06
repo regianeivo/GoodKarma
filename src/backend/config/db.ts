@@ -1,4 +1,5 @@
 import { createConnection, getConnection } from "typeorm";
+import { Reply } from "../entities/reply";
 import { Comment } from "../entities/comment";
 import { Link } from "../entities/link";
 import { Karma } from "../entities/karma";
@@ -32,6 +33,7 @@ export async function createDbConnection() {
         database: DATABASE_DB,
         entities: [
             User,
+            Reply,
             Comment,
             Link,
             Karma

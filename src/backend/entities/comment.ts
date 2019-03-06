@@ -1,7 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from "typeorm";
 import { User } from "./user";
-import { Link } from "./link";
-import { Karma } from "./karma";
+import { Reply } from "./reply";
 
 @Entity()
 export class Comment {
@@ -14,9 +13,7 @@ export class Comment {
     @ManyToOne(type => User, user => user.comment)
     @JoinColumn({name: "userId"})
     user: User;
-    @ManyToOne(type => Link, link => link.comment)
-    @JoinColumn({name: "linkId"})
-    link: Link;
-    @OneToMany(type => Karma, karma => karma.comment)
-    karma: Karma[];
+    @ManyToOne(type => Reply, reply => reply.comment)
+    @JoinColumn({name: "replyId"})
+    reply: Reply;
 }

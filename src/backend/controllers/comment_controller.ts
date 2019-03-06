@@ -2,7 +2,6 @@ import * as express from "express";
 import * as joi from "joi";
 import { authMiddleware } from "../config/middleware";
 import { getCommentRepository } from "../repositories/comment_repository";
-import { getKarmaRepository } from "../repositories/karma_repository";
 import { Comment } from "../entities/comment";
 import { Repository } from "typeorm";
 
@@ -25,7 +24,6 @@ export function getCommentController() {
 
     // Create respository so we can perform database operations
     const commentRepository = getCommentRepository();
-    const karmaRepository = getKarmaRepository();
 
     // Create handlers
     const handlers = getHandlers(commentRepository);
@@ -36,7 +34,7 @@ export function getCommentController() {
     // Declare Joi Schema so we can validate movies
     const commentSchemaForPost = {
         text: joi.string(),
-        link: joi.number(),
+        reply: joi.number(),
     };
 
     
@@ -48,7 +46,7 @@ export function getCommentController() {
             const userId = (req as any).userId;
             const result = joi.validate(newComment, commentSchemaForPost);
             if (result.error) {
-                res.status(400).send({ msg: "Comment is not valid! You must pass a text and the link id" });
+                res.status(400).send({ msg: "Comment is not valid! You must pass a text and the reply id" });
             } else {
                 const data = {
                     text: req.body.text,
@@ -104,41 +102,6 @@ export function getCommentController() {
                 const links = await commentRepository.delete(id);
                 res.json({ ok :'comment deleted!' }).send();
             }
-        })();
-    });
-
-    // HTTP POST KARMAVOTE http://localhost:8080/comments/1/karmavote
-    router.post("/:id/karmavote", authMiddleware, (req, res) => {
-        (async () => {
-            const userId = (req as any).userId;
-            const commentId = req.params.id;
-            // get the owner of the comment to receive the karma point
-            const getUser = await commentRepository.findOne(commentId, {relations: ['user']});
-            var owner = undefined;
-            if(getUser != undefined){
-                owner = getUser.user.id;
-            }
-            const data = {
-                user: owner,// userId is the user who votes
-                comment: commentId,
-            };
-
-            //block is provisional taken from the block bellow for test
-            //const karma = await karmaRepository.save(data);
-            //res.json(karma);
-            
-
-            // block bellow prevent the user to vote the same comment twice
-            // not sure if its needed in karma case
-
-            /*const allowKRate = await karmaRepository.findOne({user: userId, comment: commentId});
-            if(allowKRate === undefined){
-                const karma = await karmaRepository.save(data);
-                res.json(karma);
-            }else if(allowKRate){
-                //user not authorized to vote the same link twice
-                res.status(401).send('user not authorized to vote the same comment twice');
-            }*/
         })();
     });
 
