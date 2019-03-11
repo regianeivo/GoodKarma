@@ -9,3 +9,6 @@ export the following:
 
 create a docker image: 
     sudo docker run --name KARMA -p "$DATABASE_PORT":"$DATABASE_PORT" -e POSTGRES_PASSWORD="$DATABASE_PASSWORD" -e POSTGRES_USER="$DATABASE_USER" -e POSTGRES_DB="$DATABASE_DB" -d postgres:9.5
+
+GGHGHGHGHGHGHGHGH
+GHGHGHGHGHGHGHGHG
