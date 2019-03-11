@@ -5,6 +5,7 @@ import { getUserController } from "../controllers/users_controller";
 import { getAuthController } from "../controllers/auth_controller";
 import { getCommentController } from "../controllers/comment_controller";
 import { getLinkController } from "../controllers/links_controller";
+import { getReplyController } from "../controllers/reply_controller";
 
 export async function createApp() {
 
@@ -28,10 +29,12 @@ export async function createApp() {
     const authController = getAuthController();
     const commentsController = getCommentController();
     const linkController = getLinkController();
+    const replyController = getReplyController();
     app.use("/auth", authController);
     app.use("/users", userController);
     app.use("/comments", commentsController);
     app.use("/links", linkController);
+    app.use("/replies", replyController);
 
     return app;
 }
